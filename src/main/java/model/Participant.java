@@ -3,47 +3,47 @@ package model;
 import java.util.Scanner;
 
 public class Participant extends User {
-    String teamName = null;
-    Hackathon hackathon;
+    private Team team;
+    private boolean isTeamLeader;
 
-    Participant(Manager manager) {
-        super(manager);
+    public Participant(String username, String email, String password) {
+        super(username, email, password);
+        this.team = null;
+        this.isTeamLeader = false;
     }
 
-    void createTeam() {
-        if (this.teamName != null) {
-            System.out.println("You already have a team.");
+    public void createTeam(String teamName, Hackathon hackathon) {
+        if (this.team != null) {
+            System.out.println("You are already part of a team.");
+            return;
+        }
+
+        Team newTeam = new Team(teamName, hackathon);
+        this.team = newTeam;
+        newTeam.addMember(this);
+        this.isTeamLeader = true;
+        System.out.println("Team '" + teamName + "' created successfully.");
+    }
+
+    public void joinTeam(String teamName) {
+        if (this.team != null) {
+            System.out.println("You are already part of a team.");
+            return;
+        }
+
+        if (team.addMember(this)) {
+            this.team = team;
+            System.out.println("Joined team '" + team.getTeamName() + "' successfully.");
         } else {
-            Scanner scanner = new Scanner(System.in);
-
-            System.out.print("Please type the name of the team: ");
-            String teamName = scanner.nextLine();
-            this.teamName = teamName;
-
-            System.out.print("Please type the total members number: ");
-            int teamSize = scanner.nextInt();
-
-            if (teamSize > hackathon.maxTeamSize) {
-                System.out.println("This number exceeds the allowed maximum.");
-            } else {
-                Team team = new Team(teamName, teamSize);
-            }
+            System.out.println("Unable to join the team.");
         }
     }
 
-    void joinTeam(String teamName, Hackathon hackathon) {
-        if (this.teamName != null) {
-            System.out.println("You already have a team.");
-        } else {
-            for (Team team : hackathon.teams) {
-                if (teamName.equals(team.teamName)) {
-                    team.addParticipant(this);
-                    this.teamName = teamName;
-                    System.out.println("You have joined the team " + teamName);
-                    return;
-                }
-            }
-        }
-        System.out.println("Team not found.");
+    public String getTeamName() {
+        return team != null ? team.getTeamName() : "No team";
+    }
+
+    public boolean isTeamLeader() {
+        return isTeamLeader;
     }
 }
