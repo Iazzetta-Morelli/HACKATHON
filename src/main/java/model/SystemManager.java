@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SystemManager {
-    private List<User> users;
+    private final List<User> users;
     private User loggedInUser;
 
     public SystemManager() {
@@ -12,22 +12,23 @@ public class SystemManager {
         loggedInUser = null;
     }
 
-    public boolean registerUser(String username, String email, String password) {
-        for (User user : users ) {
+    public void registerUser(String username, String email, String password) {
+        for (User user : users) {
             if (user.getUsername().equals(username)) {
                 System.out.println("This username is already taken.");
-                return false;
+                return;
             }
+
             if (user.getEmail().equals(email)) {
                 System.out.println("This email il already in use.");
-                return false;
+                return;
             }
         }
 
         User newUser = new User(username, email, password);
         users.add(newUser);
         System.out.println("Registration completed!");
-        return true;
+        System.out.println("username: " + username + ", email: " + email + ".");
     }
 
     public boolean login(String username, String password) {

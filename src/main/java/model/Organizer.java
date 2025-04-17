@@ -12,9 +12,10 @@ public class Organizer extends User {
         organizedHackathons = new ArrayList<>();
     }
 
-    public void createHackathon(String title, String location, LocalDate startDate, LocalDate endDate, Organizer organizer, int maxTeamSize, LocalDate registrationDeadline) {
+    public Hackathon createHackathon(String title, String location, LocalDate startDate, LocalDate endDate, Organizer organizer, int maxTeamSize, LocalDate registrationDeadline) {
         Hackathon newHackathon = new Hackathon(title, location, startDate, endDate, organizer, maxTeamSize, registrationDeadline);
         organizedHackathons.add(newHackathon);
         System.out.println("Hackathon '" + title + "' created successfully!");
+        return newHackathon;
     }
 }

@@ -12,9 +12,9 @@ public class Hackathon {
     private LocalDate startDate;
     private LocalDate endDate;
     private Organizer organizer;
-    private List<Judge> judges;
-    private List<Participant> participants;
-    private List<Team> teams;
+    private final List<Judge> judges;
+    private final List<Participant> participants;
+    private final List<Team> teams;
     private int maxTeamSize;
     private LocalDate registrationDeadline;
 
@@ -34,16 +34,60 @@ public class Hackathon {
         this.isOpen = false;
     }
 
+    public void setTitle(String newTitle) {
+        this.title = newTitle;
+    }
+
+    public void setLocation(String newLocation) {
+        this.location = newLocation;
+    }
+
+    public void setStartDate(LocalDate newStartDate) {
+        this.startDate = newStartDate;
+    }
+
+    public void setEndDate(LocalDate newEndDate) {
+        this.endDate = newEndDate;
+    }
+
+    public void setOrganizer(Organizer newOrganizer) {
+        this.organizer = newOrganizer;
+    }
+
+    public void setMaxTeamSize(int newMaxTeamSize) {
+        this.maxTeamSize = newMaxTeamSize;
+    }
+
+    public void setRegistrationDeadline(LocalDate newRegistrationDeadline) {
+        this.registrationDeadline = newRegistrationDeadline;
+    }
+
     public void addJudge(Judge judge) {
         judges.add(judge);
     }
 
     public void addParticipant(Participant participant) {
-        if (isOpen && LocalDate.now().isBefore(registrationDeadline)) {
-            participants.add(participant);
-        } else {
+        if (!isOpen || !LocalDate.now().isBefore(registrationDeadline)) {
             System.out.println("Registration is currently closed.");
+        } else if (participants.contains(participant)) {
+            System.out.println("This participant is already registered.");
+        } else {
+            participants.add(participant);
+            System.out.println("Participant " + participant.getUsername() + " has been successfully registered!");
         }
+    }
+
+    public void addTeam(Team team) {
+        if (team != null && !teams.contains(team)) {
+            teams.add(team);
+            System.out.println("Team '" + team.getTeamName() + "' added to hackathon.");
+        } else {
+            System.out.println("Team is null or already registered.");
+        }
+    }
+
+    public List<Team> getTeams() {
+        return teams;
     }
 
     public int getMaxTeamSize() {
