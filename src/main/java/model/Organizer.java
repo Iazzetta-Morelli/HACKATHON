@@ -5,17 +5,14 @@ import java.util.List;
 import java.time.LocalDate;
 
 public class Organizer extends User {
-    private List<Hackathon> organizedHackathons;
-
-    public Organizer(String username, String email, String password) {
+    private String name;
+    private String lastName;
+    
+    public Organizer(String username, String email, String password, String name, String lastName) {
         super(username, email, password);
-        organizedHackathons = new ArrayList<>();
+        this.name = name;
+        this.lastName = lastName;
     }
 
-    public Hackathon createHackathon(String title, String location, LocalDate startDate, LocalDate endDate, Organizer organizer, int maxTeamSize, LocalDate registrationDeadline) {
-        Hackathon newHackathon = new Hackathon(title, location, startDate, endDate, organizer, maxTeamSize, registrationDeadline);
-        organizedHackathons.add(newHackathon);
-        System.out.println("Hackathon '" + title + "' created successfully!");
-        return newHackathon;
-    }
+    
 }
