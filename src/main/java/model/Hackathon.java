@@ -124,4 +124,8 @@ public class Hackathon {
     public LocalDate getRegistrationDeadline() {
         return registrationDeadline;
     }
+
+    public void setMaxParticipants(int maxParticipants) {
+        
+    }
 }
