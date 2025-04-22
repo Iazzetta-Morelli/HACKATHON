@@ -63,7 +63,7 @@ import java.util.UUID;
         private String generateTeamCode() {
             return java.util.UUID.randomUUID().toString().substring(0, 8).toUpperCase();
         }
-
+        
         public void assignTeamCode(Team team) {
             if (team != null) {
                 String code = generateTeamCode();
@@ -74,4 +74,3 @@ import java.util.UUID;
             }
         }
     }
-
