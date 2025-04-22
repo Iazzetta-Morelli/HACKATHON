@@ -1,38 +1,88 @@
 package model;
 
+import java.util.ArrayList;
 import java.time.LocalDate;
-import java.util.List;
+import java.time.format.DateTimeFormatter;
 
 public class Hackathon {
-    private boolean isOpen;
-    private String title;
-    private String location;
-    private Organizer organizer;
-    private List<Participant> participants;
-    private List<Judge> judges;
-    private LocalDate startDate;
-    private LocalDate endDate;
-    private int maxParticipants;
-    private int maxTeamSize;
-    private LocalDate registrationDeadline;
-    
-    public Hackathon(String title, String location, LocalDate startDate, LocalDate endDate, int maxParticipants, int maxTeamSize, LocalDate registrationDeadline) {
+    Boolean status = false;
+    String title;
+    String location;
+    LocalDate startDate;
+    LocalDate endDate;
+    Organizer organizer;
+    ArrayList<Judge> judges;
+    ArrayList<Participant> participants;
+    ArrayList<Team> teams;
+    int maxTeamSize;
+    LocalDate registrationDeadline;
+
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+    public Hackathon(boolean status, String title, String location, LocalDate startDate, LocalDate endDate, Organizer organizer) {
+        this.status = status;
         this.title = title;
         this.location = location;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.maxParticipants = maxParticipants;
-        this.maxTeamSize = maxTeamSize;
-        this.registrationDeadline = registrationDeadline;
-        this.isOpen = false;  
+        this.organizer = organizer;
     }
-    
+
+    public void setStatus(boolean newStatus) {
+        status = newStatus;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setLocation(String newLocation) {
+        location = newLocation;
+    }
+
+    public void setStartDate(LocalDate newStartDate) {
+        startDate = newStartDate;
+    }
+
+    public void setEndDate(LocalDate newEndDate) {
+        endDate = newEndDate;
+    }
+
     public void setOrganizer(Organizer organizer) {
         this.organizer = organizer;
     }
 
-    public boolean getHackathonStatus() {
-        return isOpen;
+    public void registerParticipant(Participant participant) {
+        this.participants.add(participant);
+    }
+
+    public boolean registerTeam(Team team) {
+        for (Team t : teams) {
+            if (t.getTeamName().equals(team.getTeamName())) {
+                System.out.println("This team name is already taken.");
+                return false;
+            }
+        }
+
+        this.teams.add(team);
+        System.out.println("Team has been successfully registered.");
+        return true;
+    }
+
+    public void registerJudge(Judge judge) {
+        this.judges.add(judge);
+    }
+
+    public void setMaxTeamSize(int newMaxTeamSize) {
+        maxTeamSize = newMaxTeamSize;
+    }
+
+    public void setRegistrationDeadline(LocalDate newRegistrationDeadline) {
+        registrationDeadline = newRegistrationDeadline;
+    }
+
+    public boolean getStatus() {
+        return status;
     }
 
     public String getTitle() {
@@ -43,18 +93,6 @@ public class Hackathon {
         return location;
     }
 
-    public Organizer getOrganizer() {
-        return organizer;
-    }
-
-    public List<Participant> getParticipants() {
-        return participants;
-    }
-
-    public List<Judge> getJudges() {
-        return judges;
-    }
-
     public LocalDate getStartDate() {
         return startDate;
     }
@@ -63,8 +101,20 @@ public class Hackathon {
         return endDate;
     }
 
-    public int getMaxParticipants() {
-        return maxParticipants;
+    public Organizer getOrganizer() {
+        return organizer;
+    }
+
+    public ArrayList<Judge> getJudges() {
+        return judges;
+    }
+
+    public ArrayList<Participant> getParticipants() {
+        return participants;
+    }
+
+    public ArrayList<Team> getTeams() {
+        return teams;
     }
 
     public int getMaxTeamSize() {

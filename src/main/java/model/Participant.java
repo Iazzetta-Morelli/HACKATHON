@@ -20,11 +20,9 @@ public class Participant extends User {
         return team;
     }
     
-    
-    public Team createTeam(String teamName, Hackathon hackathon, SystemManager manager) {
+    public void createTeam(String teamName, Hackathon hackathon, SystemManager systemManager) {
         if (this.team != null) {
-            System.out.println("Sei già in un team.");
-            return null;
+            System.out.println("You are already part of a team.");
         }
 
         Team newTeam = new Team(teamName, hackathon);
@@ -33,17 +31,18 @@ public class Participant extends User {
         this.isTeamLeader = true;
 
         // Assegna il codice tramite il SystemManager
-        manager.assignTeamCode(newTeam);
+        systemManager.assignTeamCode(newTeam);
 
-        System.out.println("Team creato con successo!");
-        return newTeam;
+        if (!hackathon.registerTeam(newTeam)) {
+            System.out.println("Registration failed: choose another team name and try again.");
+        } else {
+            System.out.println("Registration completed!");
+        }
     }
 
- 
-    public boolean joinTeam(String teamName, String teamCode, List<Team> availableTeams) {
+    public void joinTeam(String teamName, String teamCode, List<Team> availableTeams) {
         if (this.team != null) {
-            System.out.println("Sei già in un team.");
-            return false;
+            System.out.println("You are already part of a team.");
         }
 
         for (Team t : availableTeams) {
@@ -51,11 +50,9 @@ public class Participant extends User {
                 t.addMember(this);
                 this.team = t;
                 System.out.println("Joined the team successfully!");
-                return true;
             }
         }
 
-        System.out.println("Team not found or incorrect code..");
-        return false;
+        System.out.println("Team not found or incorrect code.");
     }
 }

@@ -2,8 +2,6 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Team {
     private String teamName;
@@ -14,26 +12,22 @@ public class Team {
     private int rate;
     private int average;
 
-    
     public Team(String teamName, Hackathon hackathon) {
         this.teamName = teamName;
         this.hackathon = hackathon;
         this.members = new ArrayList<>();
         this.documents = new ArrayList<>();
     }
-    
-    
+
     public String getTeamName() {
         return teamName;
     }
 
-    
     public int getAverage () {
         //aggiungere i parametri dei voti dei giudici
         return average;
     }
 
- 
     public void setTeamCode(String teamCode) {
         this.teamCode = teamCode;
     }
@@ -45,19 +39,16 @@ public class Team {
     public List<Document> getDocuments() {
         return documents;
     }
-    
-    
+
     public void addMember(User user) {
         members.add(user);
     }
-    
 
-    public void uploadDocument(String title, String filePath) {
-        Document newDocument = new Document(title, filePath, this); // Crea documento con percorso file
+    public void uploadDocument(String title, String content) {
+        Document newDocument = new Document(title, content, this);
         documents.add(newDocument); // Il documento viene aggiunto al team
     }
 
-    
     public void printInfo() {
         System.out.println("Team: " + teamName);
         System.out.println("Hackathon: " + hackathon.getTitle()); 

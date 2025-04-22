@@ -4,7 +4,7 @@ public class User {
     private String username;
     private String email;
     private String password;
-    private boolean isLoggedIn;
+    private boolean isLoggedIn = false;
     
     public User(String username,String email, String password) {
         this.username = username;
@@ -31,6 +31,4 @@ public class User {
     public boolean checkPassword(String inputPassword) {
         return this.password.equals(inputPassword);
     }
-    
-    
 }

@@ -2,18 +2,15 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SequencedCollection;
 import java.util.UUID;
 
     public class SystemManager {
-       private List<User> users;
-       
-       public SystemManager() {
-           this.users = new ArrayList<>(); //contiene tutti i campi di users
-       }
+        private List<User> users;
 
-
-    public class UserManager {
-        private List<User> users = new ArrayList<>();
+        public SystemManager() {
+            this.users = new ArrayList<>(); //contiene tutti i campi di users
+        }
 
         public void registerUser(User user) {
             for (User u : users) {
@@ -32,11 +29,9 @@ import java.util.UUID;
             System.out.println("Registration completed.");
         }
 
-        
         public void login(User user, String password) {
             for (User u : users) {
-                boolean match = u.getUsername().equals(user.getUsername()) ||
-                        u.getEmail().equals(user.getEmail());
+                boolean match = u.getUsername().equals(user.getUsername()) || u.getEmail().equals(user.getEmail());
 
                 if (match && u.checkPassword(password)) {
                     u.setLoginStatus(true);
@@ -50,13 +45,9 @@ import java.util.UUID;
             System.out.println("User not found.");
         }
 
-
-
         public void logout(User user) {
             for (User u : users) {
-                if (u.getUsername().equals(user.getUsername()) ||
-                        u.getEmail().equals(user.getEmail())) {
-
+                if (u.getUsername().equals(user.getUsername()) || u.getEmail().equals(user.getEmail())) {
                     if (u.getLoginStatus()) {
                         u.setLoginStatus(false);
                         System.out.println("Logout successful.");
@@ -67,17 +58,6 @@ import java.util.UUID;
                 }
             }
             System.out.println("User not found.");
-        }
-    }
-
-    
-        public void logout (User user) {
-           if(user.getLoginStatus()){
-               user.setLoginStatus(false);
-           }else{
-               System.out.println("User is already logged out.");
-               return;
-           }
         }
 
         private String generateTeamCode() {
@@ -93,5 +73,5 @@ import java.util.UUID;
                 System.out.println("Team is null, cannot assign code.");
             }
         }
-
     }
+
