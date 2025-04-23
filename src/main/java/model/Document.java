@@ -1,9 +1,12 @@
 package model;
 
+import java.util.ArrayList;
+
 public class Document {
     private String title;
     private String content;
     private Team team;
+    private ArrayList<String> comments = new ArrayList<>();
 
     public Document(String title, String content, Team team) {
         this.title = title;
@@ -25,6 +28,10 @@ public class Document {
 
     public Team getTeam() {
         return team;
+    }
+
+    public void addComment(String comment) {
+        this.comments.add(comment);
     }
 
     public void printInfo() {

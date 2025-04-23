@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Organizer extends User {
-
     public Organizer(String username, String email, String password) {
         super(username, email, password);
     }
@@ -17,7 +16,7 @@ public class Organizer extends User {
     
     public void setStatus(Hackathon hackathon, boolean status) {
         hackathon.setStatus(status);
-        System.out.println("Hackathon status set to: " + (status ? "active" : "inactive"));
+        System.out.println("Hackathon status set to: " + (status ? "open" : "closed"));
     }
     
     public void setTitle(Hackathon hackathon, String title) {
@@ -60,15 +59,8 @@ public class Organizer extends User {
         System.out.println("Registration deadline set to: " + deadline);
     }
     
-    public void inviteJudges(Hackathon hackathon, ArrayList<Judge> judgesToInvite) {
-        if (hackathon.getJudges() == null) {
-            hackathon.judges = new ArrayList<>();
-        }
-
-        for (Judge judge : judgesToInvite) {
-            hackathon.registerJudge(judge);
-            System.out.println("Judge " + judge.getUsername() + " has been invited.");
-        }
+    public void inviteJudges(Hackathon hackathon, Judge judge) {
+        hackathon.registerJudge(judge);
     }
 }
 

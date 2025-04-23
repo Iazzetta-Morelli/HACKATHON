@@ -1,82 +1,54 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class Judge extends User {
-
     private String problemStatement;
-    private List<CommentEntry> comments;
-    private List<VoteEntry> votes;
+    private String comment;
+    private float score;
 
     public Judge(String username, String email, String password) {
         super(username, email, password);
-        this.comments = new ArrayList<>();
-        this.votes = new ArrayList<>();
     }
-    
+
     public void publishProblem(String problem) {
         this.problemStatement = problem;
         System.out.println("Problem posted: " + problem);
     }
-    
-    public void addFeedback(Team team, String comment) {
-        comments.add(new CommentEntry(team, comment));
-        System.out.println("Comment added to team " + team.getTeamName() + ": " + comment);
+
+    public void addFeedback(String comment, Document document) {
+        document.addComment(comment);
     }
 
-    public void rateTeam(Team team, int rating) {
-        if (rating < 0 || rating > 100) {
-            System.out.println("The score must be between 0 and 10.");
-            return;
+    public void rateTeam(Team team, int score) {
+        if (score < 0 || score > 10) {
+            System.out.println("The score must be between 0 and 10: re-try.");
+        } else {
+            team.setScore(score);
         }
-        // Cerca se il team è già stato votato
-        for (VoteEntry v : votes) {
-            if (v.team == team) {
-                v.rating = rating;
-                System.out.println("Updated score for team " + team.getTeamName() + ": " + rating);
-                return;
+    }
+
+    public void setFinalScore(ArrayList<Team> teams) {
+        float average = 0;
+
+        for (Team t : teams) {
+            for (Float f : t.getScores()) {
+                average += f;
             }
-        }
-        votes.add(new VoteEntry(team, rating));
-        System.out.println("The team " + team.getTeamName() + " received a score of " + rating);
-    }
-    
-    public void publishRanking() {
-        if (votes.isEmpty()) {
-            System.out.println("No scores have been registered in the ranking.");
-            return;
-        }
-        
-        // Ordina i team per punteggio
-        List<VoteEntry> sortedVotes = new ArrayList<>(votes);
-        sortedVotes.sort((a, b) -> b.rating - a.rating);
-
-        System.out.println("Final ranking:");
-        int position = 1;
-        for (VoteEntry entry : sortedVotes) {
-            System.out.println(position + ". " + entry.team.getTeamName() + " - Score: " + entry.rating);
-            position++;
+            average /= t.getScores().size();
+            t.setFinalScore(average);
         }
     }
 
-    private class CommentEntry {
-        Team team;
-        String comment;
+    public void publishRanking(ArrayList<Team> teams) {
+        teams.sort(Comparator.comparing(Team::getFinalScore).reversed());
 
-        CommentEntry(Team team, String comment) {
-            this.team = team;
-            this.comment = comment;
-        }
-    }
-    
-    private class VoteEntry {
-        Team team;
-        int rating;
-
-        VoteEntry(Team team, int rating) {
-            this.team = team;
-            this.rating = rating;
+        System.out.println("Classifica:");
+        for (int i = 0; i < teams.size(); i++) {
+            Team team = teams.get(i);
+            System.out.printf("%d. %s - %.2f%n", i + 1, team.getTeamName(), team.getFinalScore());
         }
     }
 }

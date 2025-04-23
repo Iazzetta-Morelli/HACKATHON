@@ -9,23 +9,19 @@ public class Team {
     private Hackathon hackathon;
     private List<Document> documents;
     private String teamCode;
-    private int rate;
-    private int average;
+    private ArrayList<Float> scores;
+    private float finalScore;
 
     public Team(String teamName, Hackathon hackathon) {
         this.teamName = teamName;
         this.hackathon = hackathon;
         this.members = new ArrayList<>();
         this.documents = new ArrayList<>();
+        this.scores = new ArrayList<>();
     }
 
     public String getTeamName() {
         return teamName;
-    }
-
-    public int getAverage () {
-        //aggiungere i parametri dei voti dei giudici
-        return average;
     }
 
     public void setTeamCode(String teamCode) {
@@ -34,6 +30,22 @@ public class Team {
     
     public String getTeamCode() {
         return teamCode;
+    }
+
+    public ArrayList<Float> getScores() {
+        return scores;
+    }
+
+    public float getFinalScore() {
+        return finalScore;
+    }
+
+    public void setScore(float score) {
+        this.scores.add(score);
+    }
+
+    public void setFinalScore(float finalScore) {
+        this.finalScore = finalScore;
     }
 
     public List<Document> getDocuments() {
