@@ -65,4 +65,15 @@ public class SystemManager {
     public User getLoggedInUser() {
         return loggedInUser;
     }
+
+    private String generateTeamCode() {
+        return java.util.UUID.randomUUID().toString().substring(0, 8).toUpperCase();
+    }
+
+    public void assignTeamCode(Team team) {
+        if (team != null) {
+            String code = generateTeamCode();
+            System.out.println("Team is null, cannot assign code.");
+        }
+    }
 }

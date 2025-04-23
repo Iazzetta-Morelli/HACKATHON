@@ -45,7 +45,7 @@ public class Judge extends User {
     public void publishRanking(ArrayList<Team> teams) {
         teams.sort(Comparator.comparing(Team::getFinalScore).reversed());
 
-        System.out.println("Classifica:");
+        System.out.println("Ranking:");
         for (int i = 0; i < teams.size(); i++) {
             Team team = teams.get(i);
             System.out.printf("%d. %s - %.2f%n", i + 1, team.getTeamName(), team.getFinalScore());
