@@ -31,39 +31,29 @@ public class SystemManager {
         System.out.println("username: " + username + ", email: " + email + ".");
     }
 
-    public boolean login(String username, String password) {
-        for (User user : users) {
-            if (user.getUsername().equals(username)) {
-                if (user.checkPassword(password)) {
-                    loggedInUser = user;
-                    System.out.println("Login was successful!");
-                    return true;
-                } else {
-                    System.out.println("Incorrect password.");
-                    return false;
-                }
+    public void login(User user, String password) {
+        for (User u : users) {
+            boolean match = u.getUsername().equals(user.getUsername()) ||
+                    u.getEmail().equals(user.getEmail());
+            if (match && u.checkPassword(password)) {
+                u.setLoginStatus(true);
+                System.out.println("Login successful.");
+                return;
+            } else if (match) {
+                System.out.println("Incorrect password.");
+                return;
             }
         }
-
-        System.out.println("Username not found.");
-        return false;
+        System.out.println("User not found.");
     }
 
-    public void logout() {
-        if (loggedInUser == null) {
-            System.out.println("User is already logged out");
+    public void logout(User user) {
+        if (user.getLoginStatus()){
+            user.setLoginStatus(false);
         } else {
-            loggedInUser = null;
-            System.out.println("Logout was successful!");
+            System.out.println("User is already logged out.");
+            return;
         }
-    }
-
-    public boolean isUserLoggedIn() {
-        return loggedInUser != null;
-    }
-
-    public User getLoggedInUser() {
-        return loggedInUser;
     }
 
     private String generateTeamCode() {

@@ -16,6 +16,7 @@ public class Hackathon {
     ArrayList<Team> teams;
     int maxTeamSize;
     LocalDate registrationDeadline;
+    private String problemStatement;
 
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
@@ -50,6 +51,10 @@ public class Hackathon {
 
     public void setOrganizer(Organizer organizer) {
         this.organizer = organizer;
+    }
+
+    public void setProblemStatement(String problemStatement) {
+        this.problemStatement = problemStatement;
     }
 
     public void registerParticipant(Participant participant) {

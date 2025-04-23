@@ -5,17 +5,18 @@ import java.util.Comparator;
 import java.util.List;
 
 public class Judge extends User {
-    private String problemStatement;
-    private String comment;
-    private float score;
+    public boolean isHeadJudge;
 
-    public Judge(String username, String email, String password) {
+    public Judge(String username, String email, String password, boolean isHeadJudge) {
         super(username, email, password);
+        this.isHeadJudge = isHeadJudge;
     }
 
-    public void publishProblem(String problem) {
-        this.problemStatement = problem;
-        System.out.println("Problem posted: " + problem);
+    public void publishProblem(Hackathon hackathon, String problemStatement) {
+        if (isHeadJudge) {
+            hackathon.setProblemStatement(problemStatement);
+            System.out.println("Problem statement: " + problemStatement);
+        }
     }
 
     public void addFeedback(String comment, Document document) {

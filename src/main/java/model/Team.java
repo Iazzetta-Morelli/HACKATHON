@@ -5,17 +5,17 @@ import java.util.List;
 
 public class Team {
     private String teamName;
-    private List<User> members;
+    private List<User> teamMembers;
     private Hackathon hackathon;
     private List<Document> documents;
     private String teamCode;
-    private ArrayList<Float> scores;
+    private List<Float> scores;
     private float finalScore;
 
     public Team(String teamName, Hackathon hackathon) {
         this.teamName = teamName;
         this.hackathon = hackathon;
-        this.members = new ArrayList<>();
+        this.teamMembers = new ArrayList<>();
         this.documents = new ArrayList<>();
         this.scores = new ArrayList<>();
     }
@@ -32,7 +32,7 @@ public class Team {
         return teamCode;
     }
 
-    public ArrayList<Float> getScores() {
+    public List<Float> getScores() {
         return scores;
     }
 
@@ -53,7 +53,7 @@ public class Team {
     }
 
     public void addMember(User user) {
-        members.add(user);
+        teamMembers.add(user);
     }
 
     public void uploadDocument(String title, String content) {
@@ -66,7 +66,7 @@ public class Team {
         System.out.println("Hackathon: " + hackathon.getTitle()); 
 
         System.out.println("Members:");
-        for (User u : members) {
+        for (User u : teamMembers) {
             System.out.println("- " + u.getUsername());
         }
 

@@ -52,7 +52,6 @@ public class Participant extends User {
                 System.out.println("Joined the team successfully!");
             }
         }
-
         System.out.println("Team not found or incorrect code.");
     }
 }
